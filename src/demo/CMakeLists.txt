@@ -1,0 +1,29 @@
+IF(TERMBOX_LIB_BUILD_SHARED)
+  ADD_DEFINITIONS( -DTERMBOX_DLL )
+ENDIF(TERMBOX_LIB_BUILD_SHARED)
+
+ADD_EXECUTABLE(keyboard
+               ${CMAKE_CURRENT_LIST_DIR}/keyboard.c
+               )
+
+ADD_EXECUTABLE(output
+               ${CMAKE_CURRENT_LIST_DIR}/output.c
+               )
+
+ADD_EXECUTABLE(paint
+               ${CMAKE_CURRENT_LIST_DIR}/paint.c
+               )
+
+IF(TERMBOX_LIB_BUILD_SHARED)
+    TARGET_LINK_LIBRARIES(keyboard termbox_lib)
+    TARGET_LINK_LIBRARIES(output termbox_lib)
+    TARGET_LINK_LIBRARIES(paint termbox_lib)
+ELSE(TERMBOX_LIB_BUILD_SHARED)
+    TARGET_LINK_LIBRARIES(keyboard termbox_lib_static)
+    TARGET_LINK_LIBRARIES(output termbox_lib_static)
+    TARGET_LINK_LIBRARIES(paint termbox_lib_static)
+ENDIF(TERMBOX_LIB_BUILD_SHARED)
+
+SET_TARGET_PROPERTIES(keyboard PROPERTIES OUTPUT_NAME keyboard)
+SET_TARGET_PROPERTIES(output PROPERTIES OUTPUT_NAME output)
+SET_TARGET_PROPERTIES(paint PROPERTIES OUTPUT_NAME paint)
